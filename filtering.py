@@ -6,9 +6,10 @@ allchars = string.maketrans('', '')
 def makefilter(keep):
     delchars = allchars.translate(allchars, keep)
 
-    def thefilter(s):
-        return s.translate(allchars, delchars)
-    return thefilter
+    # def thefilter(s):
+    #     return s.translate(allchars, delchars)
+    # return thefilter
+    return lambda s: s.translate(allchars, delchars)
 
 
 def canonicform(s):
