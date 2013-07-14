@@ -23,19 +23,24 @@ class make_xlat_re(make_xlat):
             if re.search(key, text):
                 return key
     def one_xlat(self, match):
-        return adict[self.dedictkey(match.group(0))]
+        return self.adict[self.dedictkey(match.group(0))]
 
 if __name__ == '__main__':
     text = "Larry Wall is the creator of Perl 123"
     adict = {
      "Larry Wall" : "Guido van Rossum",
      "creator" : "Benevolent Dictator for Life",
-     "Perl" : "Python",
-     r"(\d+)" : "digits"
+     "Perl" : "Python"
+    }
+    redict = {
+     "Larry Wall" : "Guido van Rossum",
+     "creator" : "Benevolent Dictator for Life",
+     "(?:Perl|Ruby)" : "Python",
+     "(\d+)" : "digits"
     }
     translate = make_xlat(adict)
     transwords = make_xlat_by_whole_words(adict)
-    transre = make_xlat_re(adict)
+    transre = make_xlat_re(redict)
     print translate(text)
     print transwords(text)
     print transre(text)
