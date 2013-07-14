@@ -15,14 +15,27 @@ class make_xlat_by_whole_words(make_xlat):
     def make_rx(self):
         return re.compile(r'\b%s\b' % r'\b|\b'.join(map(re.escape, self.adict)))
 
+class make_xlat_re(make_xlat):
+    def make_rx(self):
+        return re.compile('|'.join(self.adict))
+    def dedictkey(self, text):
+        for key in self.adict.keys():
+            if re.search(key, text):
+                return key
+    def one_xlat(self, match):
+        return adict[self.dedictkey(match.group(0))]
+
 if __name__ == '__main__':
-    text = "Larry Wall is the creator of Perl"
+    text = "Larry Wall is the creator of Perl 123"
     adict = {
      "Larry Wall" : "Guido van Rossum",
      "creator" : "Benevolent Dictator for Life",
-     "Perl" : "Python"
+     "Perl" : "Python",
+     r"(\d+)" : "digits"
     }
     translate = make_xlat(adict)
     transwords = make_xlat_by_whole_words(adict)
+    transre = make_xlat_re(adict)
     print translate(text)
     print transwords(text)
+    print transre(text)
