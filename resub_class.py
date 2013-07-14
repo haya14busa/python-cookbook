@@ -1,4 +1,7 @@
 # p40
+# http://omoplatta.blogspot.jp/2010/10/python_30.html
+# http://kobito-kobito.blogspot.jp/2011/06/python-2-1-2.html
+
 import re
 class make_xlat:
     def __init__(self, *args, **kwds):
